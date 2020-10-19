@@ -13,6 +13,6 @@ public interface CustomerService {
 
     void saveCustomer(Customer customer);
 
-    Customer getCustomerById(String id) throws CustomerNotFoundException;
+    Customer getCustomerById(int customerId) throws CustomerNotFoundException;
 }
 

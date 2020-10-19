@@ -20,16 +20,13 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer getCustomer(String id) throws CustomerNotFoundException {
-        int custId = Integer.parseInt(id);
-        Customer customer = entityManager.find(Customer.class, custId);
+    public Customer getCustomer(int customerId) throws CustomerNotFoundException {
 
+        Customer customer = entityManager.find(Customer.class, customerId);
         if (customer != null)
             return customer;
         else
             throw new CustomerNotFoundException("Customer not found");
     }
-
-
 }
 

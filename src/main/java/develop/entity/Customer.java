@@ -11,7 +11,6 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqId")
     @Column(name = "ID")
     private int id;
-
     @Column(name = "PERSON_NUMBER")
     private String personNumber;
     @Column(name = "FIRST_NAME")

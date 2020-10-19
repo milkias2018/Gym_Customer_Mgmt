@@ -19,7 +19,6 @@ public class CustomerServiceImpl implements CustomerService {
         this.customerDao = customerDao;
     }
 
-
     @Override
     public void saveCustomer(Customer customer) {
         if (customer != null) {
@@ -29,9 +28,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomerById(String id) throws CustomerNotFoundException {
-        if (id != null) {
-            return customerDao.getCustomer(id);
+    public Customer getCustomerById(int customerId) throws CustomerNotFoundException {
+        if (customerId != 0) {
+            return customerDao.getCustomer(customerId);
         } else
             throw new CustomerNotFoundException("customer not found");
     }

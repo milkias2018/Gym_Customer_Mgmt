@@ -13,6 +13,7 @@ public interface CustomerDao  {
 
   void save(Customer customer);
 
-  Customer getCustomer(String id) throws CustomerNotFoundException;
+  Customer getCustomer(int customerId) throws CustomerNotFoundException;
+
 
 }

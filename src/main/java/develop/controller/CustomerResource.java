@@ -34,11 +34,11 @@ public class CustomerResource {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomerById(@PathVariable String id) throws CustomerNotFoundException {
+    @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Customer> getCustomerById(@PathVariable int customerId) throws CustomerNotFoundException {
         try {
-            if (id != null) {
-                Customer customer = customerService.getCustomerById(id);
+            if (customerId != 0) {
+                Customer customer = customerService.getCustomerById(customerId);
                 return ResponseEntity.ok(customer);
             }
         } catch (CustomerNotFoundException e) {
@@ -46,4 +46,5 @@ public class CustomerResource {
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+
 }
