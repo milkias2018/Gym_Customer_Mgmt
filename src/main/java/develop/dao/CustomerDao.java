@@ -2,6 +2,7 @@ package develop.dao;
 
 
 import develop.entity.Customer;
+import develop.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -11,6 +12,7 @@ import javax.transaction.Transactional;
 public interface CustomerDao  {
 
   void save(Customer customer);
-  Customer getCustomer(String id);
+
+  Customer getCustomer(String id) throws CustomerNotFoundException;
 
 }

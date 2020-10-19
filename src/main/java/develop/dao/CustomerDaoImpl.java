@@ -2,6 +2,7 @@
 package develop.dao;
 
 import develop.entity.Customer;
+import develop.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -19,10 +20,14 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer getCustomer(String id) {
-        int custId= Integer.parseInt(id);
-        Customer customer=entityManager.find(Customer.class,custId);
-        return customer;
+    public Customer getCustomer(String id) throws CustomerNotFoundException {
+        int custId = Integer.parseInt(id);
+        Customer customer = entityManager.find(Customer.class, custId);
+
+        if (customer != null)
+            return customer;
+        else
+            throw new CustomerNotFoundException("Customer not found");
     }
 
 
