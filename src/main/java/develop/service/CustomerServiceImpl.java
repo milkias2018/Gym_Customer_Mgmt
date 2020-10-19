@@ -1,7 +1,6 @@
 package develop.service;
 
 import develop.dao.CustomerDao;
-import develop.dto.CustomerDto;
 import develop.entity.Customer;
 import develop.exception.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomerByPersonNummer(String id) throws CustomerNotFoundException {
+    public Customer getCustomerById(String id) throws CustomerNotFoundException {
         if (id != null) {
             return customerDao.getCustomer(id);
         } else

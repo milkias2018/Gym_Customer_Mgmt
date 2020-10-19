@@ -2,7 +2,6 @@ package develop.controller;
 
 import develop.dto.CustomerDto;
 import develop.entity.Customer;
-
 import develop.exception.CustomerNotFoundException;
 import develop.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import javax.ws.rs.QueryParam;
 
 
 @RestController
@@ -36,11 +34,11 @@ public class CustomerResource {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomerByPersonnummer(@QueryParam("id") String id) throws CustomerNotFoundException {
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Customer> getCustomerById(@PathVariable String id) throws CustomerNotFoundException {
         try {
             if (id != null) {
-                Customer customer = customerService.getCustomerByPersonNummer(id);
+                Customer customer = customerService.getCustomerById(id);
                 return ResponseEntity.ok(customer);
             }
         } catch (CustomerNotFoundException e) {
