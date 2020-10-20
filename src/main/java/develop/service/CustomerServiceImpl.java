@@ -42,4 +42,12 @@ public class CustomerServiceImpl implements CustomerService {
         } else
             throw new CustomerNotFoundException("customer not found");
     }
+
+    @Override
+    public void removeCustomer(int customerId) throws CustomerNotFoundException {
+        if (customerId != 0)
+            customerDao.removeCustomer(customerId);
+        else
+            throw new CustomerNotFoundException("customer not found exception");
+    }
 }

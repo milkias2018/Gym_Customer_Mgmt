@@ -65,4 +65,20 @@ public class CustomerResource {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Customer> removeCustomer(@PathVariable("id") int id) {
+
+        try {
+            if (id != 0) {
+                customerService.removeCustomer(id);
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        } catch (CustomerNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (NoResultException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
 }

@@ -18,7 +18,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public void save(Customer customer) {
-       entityManager.persist(customer);
+        entityManager.persist(customer);
     }
 
     @Override
@@ -35,6 +35,16 @@ public class CustomerDaoImpl implements CustomerDao {
         Query customerQuery = entityManager.createQuery("select c from Customer c where c.personNumber LIKE :personNummer").
                 setParameter("personNummer", personNummer);
         return (Customer) customerQuery.getSingleResult();
+    }
+
+    @Override
+    public void removeCustomer(int customerId) throws CustomerNotFoundException {
+        Customer customer = entityManager.find(Customer.class, customerId);
+        if (customer != null)
+            entityManager.remove(customer);
+        else
+            throw new CustomerNotFoundException("customer not found");
+
     }
 }
 

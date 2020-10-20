@@ -13,7 +13,8 @@ public interface CustomerService {
 
     void saveCustomer(Customer customer);
     Customer getCustomerById(int customerId) throws CustomerNotFoundException;
-
     Customer getCustomerByPersonNummer(String personNummer) throws CustomerNotFoundException;
+
+    void removeCustomer(int customerId) throws CustomerNotFoundException;
 }
 
