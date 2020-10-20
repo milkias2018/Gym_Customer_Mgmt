@@ -12,7 +12,8 @@ import javax.transaction.Transactional;
 public interface CustomerService {
 
     void saveCustomer(Customer customer);
-
     Customer getCustomerById(int customerId) throws CustomerNotFoundException;
+
+    Customer getCustomerByPersonNummer(String personNummer) throws CustomerNotFoundException;
 }
 

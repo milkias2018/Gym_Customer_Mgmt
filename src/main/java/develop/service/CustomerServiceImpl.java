@@ -34,4 +34,12 @@ public class CustomerServiceImpl implements CustomerService {
         } else
             throw new CustomerNotFoundException("customer not found");
     }
+
+    @Override
+    public Customer getCustomerByPersonNummer(String personNummer) throws CustomerNotFoundException {
+        if (personNummer != null) {
+            return customerDao.getCustomerByPersonNummer(personNummer);
+        } else
+            throw new CustomerNotFoundException("customer not found");
+    }
 }

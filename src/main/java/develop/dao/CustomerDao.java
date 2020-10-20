@@ -12,8 +12,8 @@ import javax.transaction.Transactional;
 public interface CustomerDao  {
 
   void save(Customer customer);
-
   Customer getCustomer(int customerId) throws CustomerNotFoundException;
 
+  Customer getCustomerByPersonNummer(String personNummer) throws CustomerNotFoundException;
 
 }
