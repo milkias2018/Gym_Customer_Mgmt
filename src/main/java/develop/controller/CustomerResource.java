@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.NoResultException;
 import javax.ws.rs.QueryParam;
+import java.util.List;
 
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("api/customers")
 public class CustomerResource {
 
     @Autowired
@@ -81,4 +82,32 @@ public class CustomerResource {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") int id, @RequestBody Customer customer) {
+        try {
+            if (id != 0 && customer != null) {
+                customerService.update(id, customer);
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        } catch (CustomerNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (NoResultException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+    }
+
+    @GetMapping(value = "/records", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Customer>> getCustomers() throws CustomerNotFoundException {
+        List<Customer> customerList = customerService.getCustomers();
+        try {
+            if (customerList != null) {
+                return ResponseEntity.ok(customerService.getCustomers());
+            }
+        } catch (CustomerNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
 }

@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.List;
 
 @Component
 public class CustomerDaoImpl implements CustomerDao {
@@ -45,6 +46,26 @@ public class CustomerDaoImpl implements CustomerDao {
         else
             throw new CustomerNotFoundException("customer not found");
 
+    }
+
+    @Override
+    public void update(int id, Customer customer) throws CustomerNotFoundException {
+        Customer customerToUpdate = entityManager.find(Customer.class, id);
+        if (customerToUpdate != null) {
+            customerToUpdate.setPersonNumber(customer.getPersonNumber());
+            customerToUpdate.setFirstName(customer.getFirstName());
+            customerToUpdate.setMiddleName(customer.getMiddleName());
+            customerToUpdate.setLastName(customer.getLastName());
+            customerToUpdate.setMembershipType(customer.getMembershipType());
+            customerToUpdate.setRegistrationDate(customer.getRegistrationDate());
+        } else
+            throw new CustomerNotFoundException("customer not found");
+    }
+
+    @Override
+    public List<Customer> getCustomers() {
+        Query customersQuery = entityManager.createQuery("select c from Customer c");
+        return customersQuery.getResultList();
     }
 }
 

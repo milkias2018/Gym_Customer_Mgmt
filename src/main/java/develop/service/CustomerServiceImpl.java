@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Component("customerService")
 @Transactional
@@ -49,5 +50,22 @@ public class CustomerServiceImpl implements CustomerService {
             customerDao.removeCustomer(customerId);
         else
             throw new CustomerNotFoundException("customer not found exception");
+    }
+
+    @Override
+    public void update(int id, Customer customer) throws CustomerNotFoundException {
+        if (id != 0 && customer != null) {
+            customerDao.update(id, customer);
+        } else
+            throw new CustomerNotFoundException("customer not found");
+    }
+
+    @Override
+    public List<Customer> getCustomers() throws CustomerNotFoundException {
+        List<Customer> customers = customerDao.getCustomers();
+        if (customers != null)
+            return customers;
+        else
+            throw new CustomerNotFoundException("customer not found");
     }
 }
