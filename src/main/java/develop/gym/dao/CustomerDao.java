@@ -1,8 +1,8 @@
-package develop.dao;
+package develop.gym.dao;
 
 
-import develop.entity.Customer;
-import develop.exception.CustomerNotFoundException;
+import develop.gym.entity.Customer;
+import develop.gym.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;

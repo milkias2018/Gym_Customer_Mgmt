@@ -1,8 +1,8 @@
-package develop.dto;
+package develop.gym.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import develop.entity.Address;
+import develop.gym.entity.Address;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AddressDto {

@@ -1,25 +1,30 @@
-package develop.dto;
+package develop.gym.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import develop.entity.Membership;
+import org.hibernate.annotations.GenericGenerator;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class MembershipDto {
-    @JsonProperty("id")
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "MEMBERSHIP")
+public class Membership implements Serializable {
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "ID")
     private String id;
-    @JsonProperty("membershipType")
+    @Column(name = "MEMBERSHIP_TYPE")
     private String membershipType;
-    @JsonProperty("membershipPeriod")
+    @Column(name = "MEMBERSHIP_PERIOD")
     private String membershipPeriod;
-    @JsonProperty("costPerMonth")
+    @Column(name = "COST_PER_MONTH")
     private double costPerMonth;
-    @JsonProperty("groupTrainingIncluded")
+    @Column(name = "GROUP_TRAINING")
     private boolean groupTrainingIncluded;
-    @JsonProperty("membershipStatus")
+    @Column(name = "MEMBERSHIP_STATUS")
     private String membershipStatus;
 
-    public MembershipDto(String id, String membershipType, String membershipPeriod, double costPerMonth, boolean groupTrainingIncluded, String membershipStatus) {
+    public Membership(String id, String membershipType, String membershipPeriod, double costPerMonth, boolean groupTrainingIncluded, String membershipStatus) {
         this.id = id;
         this.membershipType = membershipType;
         this.membershipPeriod = membershipPeriod;
@@ -28,16 +33,7 @@ public class MembershipDto {
         this.membershipStatus = membershipStatus;
     }
 
-    public MembershipDto() {
-    }
-
-    public static Membership convertToEntity(MembershipDto membershipDto) {
-        if (membershipDto != null) {
-            Membership membership = new Membership(membershipDto.getId(), membershipDto.getMembershipType(), membershipDto.getMembershipPeriod(), membershipDto.getCostPerMonth(),
-                    membershipDto.isGroupTrainingIncluded(), membershipDto.getMembershipStatus());
-            return membership;
-        }
-        return null;
+    public Membership() {
     }
 
     public String getId() {

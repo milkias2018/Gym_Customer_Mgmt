@@ -1,8 +1,8 @@
-package develop.dto;
+package develop.gym.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import develop.entity.Customer;
+import develop.gym.entity.Customer;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomerDto {

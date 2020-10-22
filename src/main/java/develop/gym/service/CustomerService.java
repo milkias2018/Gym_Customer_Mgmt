@@ -1,8 +1,7 @@
+package develop.gym.service;
 
-package develop.service;
-
-import develop.entity.Customer;
-import develop.exception.CustomerNotFoundException;
+import develop.gym.entity.Customer;
+import develop.gym.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

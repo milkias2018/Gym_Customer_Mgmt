@@ -1,8 +1,8 @@
-package develop.service;
+package develop.gym.service;
 
-import develop.dao.CustomerDao;
-import develop.entity.Customer;
-import develop.exception.CustomerNotFoundException;
+import develop.gym.dao.CustomerDao;
+import develop.gym.entity.Customer;
+import develop.gym.exception.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package develop.entity;
+package develop.gym.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 

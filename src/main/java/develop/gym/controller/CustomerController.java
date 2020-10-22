@@ -1,9 +1,9 @@
-package develop.controller;
+package develop.gym.controller;
 
-import develop.dto.CustomerDto;
-import develop.entity.Customer;
-import develop.exception.CustomerNotFoundException;
-import develop.service.CustomerService;
+import develop.gym.dto.CustomerDto;
+import develop.gym.entity.Customer;
+import develop.gym.exception.CustomerNotFoundException;
+import develop.gym.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/customers")
-public class CustomerResource {
+public class CustomerController {
 
     @Autowired
     CustomerService customerService;
