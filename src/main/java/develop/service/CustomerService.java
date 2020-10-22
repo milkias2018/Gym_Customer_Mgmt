@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -14,13 +15,13 @@ public interface CustomerService {
 
     void saveCustomer(Customer customer);
 
-    Customer getCustomerById(int customerId) throws CustomerNotFoundException;
+    Customer getCustomerById(UUID customerId) throws CustomerNotFoundException;
 
     Customer getCustomerByPersonNummer(String personNummer) throws CustomerNotFoundException;
 
-    void removeCustomer(int customerId) throws CustomerNotFoundException;
+    void removeCustomer(UUID customerId) throws CustomerNotFoundException;
 
-    void update(int id, Customer customer) throws CustomerNotFoundException;
+    void update(UUID id, Customer customer) throws CustomerNotFoundException;
 
     List<Customer> getCustomers() throws CustomerNotFoundException;
 }

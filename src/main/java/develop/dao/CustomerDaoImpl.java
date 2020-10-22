@@ -10,6 +10,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class CustomerDaoImpl implements CustomerDao {
@@ -23,7 +24,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer getCustomer(int customerId) throws CustomerNotFoundException {
+    public Customer getCustomer(UUID customerId) throws CustomerNotFoundException {
         Customer customer = entityManager.find(Customer.class, customerId);
         if (customer != null)
             return customer;
@@ -39,7 +40,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public void removeCustomer(int customerId) throws CustomerNotFoundException {
+    public void removeCustomer(UUID customerId) throws CustomerNotFoundException {
         Customer customer = entityManager.find(Customer.class, customerId);
         if (customer != null)
             entityManager.remove(customer);
@@ -49,15 +50,15 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public void update(int id, Customer customer) throws CustomerNotFoundException {
+    public void update(UUID id, Customer customer) throws CustomerNotFoundException {
         Customer customerToUpdate = entityManager.find(Customer.class, id);
         if (customerToUpdate != null) {
             customerToUpdate.setPersonNumber(customer.getPersonNumber());
             customerToUpdate.setFirstName(customer.getFirstName());
             customerToUpdate.setMiddleName(customer.getMiddleName());
             customerToUpdate.setLastName(customer.getLastName());
-            customerToUpdate.setMembershipType(customer.getMembershipType());
-            customerToUpdate.setRegistrationDate(customer.getRegistrationDate());
+            //customerToUpdate.setMembershipType(customer.getMembershipType());
+            //customerToUpdate.setRegistrationDate(customer.getRegistrationDate());
         } else
             throw new CustomerNotFoundException("customer not found");
     }
