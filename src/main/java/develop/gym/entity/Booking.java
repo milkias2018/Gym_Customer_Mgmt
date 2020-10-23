@@ -8,16 +8,16 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "BOOKING")
+@Table(name = "BOOKINGS")
 public class Booking implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID")
     private UUID id;
-    @ManyToOne
+    @ManyToOne(targetEntity = Customer.class)
     private Customer customer;
-    @ManyToOne
+    @ManyToOne(targetEntity = GroupTraining.class)
     private GroupTraining groupTraining;
     @Column(name = "QUEUE_NUMBER")
     private int queueNumber;

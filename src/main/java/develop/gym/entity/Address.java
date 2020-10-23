@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ADDRESS")
+@Table(name = "ADDRESSES")
 public class Address implements Serializable {
 
     @Id
@@ -14,6 +14,9 @@ public class Address implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID")
     private String id;
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private Customer customer;
     @Column(name = "STREET_NAME")
     private String streetName;
     @Column(name = "STREET_NUMBER")
@@ -29,8 +32,9 @@ public class Address implements Serializable {
     @Column(name = "COUNTRY")
     private String country;
 
-    public Address(String id, String streetName, int streetNumber, int roomNumber, String zipCode, String municipality, String city, String country) {
+    public Address(String id, Customer customer, String streetName, int streetNumber, int roomNumber, String zipCode, String municipality, String city, String country) {
         this.id = id;
+        this.customer = customer;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
         this.roomNumber = roomNumber;
@@ -41,6 +45,14 @@ public class Address implements Serializable {
     }
 
     public Address() {
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getId() {

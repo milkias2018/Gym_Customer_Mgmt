@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-@Table(name = "GROUP_TRAINING")
+@Table(name = "GROUP_TRAININGS")
 public class GroupTraining implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
