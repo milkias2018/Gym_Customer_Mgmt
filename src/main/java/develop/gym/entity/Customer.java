@@ -23,7 +23,7 @@ public class Customer implements Serializable {
     private String lastName;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Address address;
     @OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     private Subscription subscription;

@@ -12,7 +12,7 @@ public class Address implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "ID")
+    @Column(name = "ADDRESS_ID")
     private String id;
     @OneToOne(fetch = FetchType.LAZY)
     //@MapsId
