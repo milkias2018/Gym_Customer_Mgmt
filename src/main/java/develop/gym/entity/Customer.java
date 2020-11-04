@@ -23,9 +23,9 @@ public class Customer implements Serializable {
     private String lastName;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     private Address address;
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
     private Subscription subscription;
     @Column(name = "NUMBER_OF_BOOKINGS_PER_WEEK")
     private int numberOfBookingAllowedPerWeek;
@@ -44,6 +44,16 @@ public class Customer implements Serializable {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.subscription = subscription;
+        this.numberOfBookingAllowedPerWeek = numberOfBookingAllowedPerWeek;
+        this.memberSince = memberSince;
+    }
+
+    public Customer(String personNumber, String firstName, String middleName, String lastName, String phoneNumber, int numberOfBookingAllowedPerWeek, String memberSince) {
+        this.personNumber = personNumber;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
         this.numberOfBookingAllowedPerWeek = numberOfBookingAllowedPerWeek;
         this.memberSince = memberSince;
     }

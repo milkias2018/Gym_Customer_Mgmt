@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.NoResultException;
 import javax.ws.rs.QueryParam;
 import java.util.List;
-import java.util.UUID;
 
 
 @RestController
@@ -28,8 +27,15 @@ public class CustomerController {
 
         try {
             if (customerDto != null) {
-                CustomerDto customerDto1 = new CustomerDto(customerDto.getId(), customerDto.getPersonNumber(), customerDto.getFirstName(), customerDto.getMiddleName(), customerDto.getLastName(),
-                        customerDto.getPhoneNumber(), customerDto.getAddressDto(), customerDto.getMembershipDto(), customerDto.getNumberOfBookingAllowedPerWeek(), customerDto.getMemberSince());
+                CustomerDto customerDto1 = new CustomerDto(customerDto.getPersonNumber(),
+                        customerDto.getFirstName(),
+                        customerDto.getMiddleName(),
+                        customerDto.getLastName(),
+                        customerDto.getPhoneNumber(),
+                        customerDto.getAddressDto(),
+                        customerDto.getMembershipDto(),
+                        customerDto.getNumberOfBookingAllowedPerWeek(),
+                        customerDto.getMemberSince());
                 Customer customer = CustomerDto.convertToEntity(customerDto1);
                 customerService.saveCustomer(customer);
                 return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -41,7 +47,7 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomerById(@PathVariable UUID customerId) throws CustomerNotFoundException {
+    public ResponseEntity<Customer> getCustomerById(@PathVariable String customerId) throws CustomerNotFoundException {
         try {
             if (customerId != null) {
                 Customer customer = customerService.getCustomerById(customerId);
@@ -69,7 +75,7 @@ public class CustomerController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Customer> removeCustomer(@PathVariable("id") UUID id) {
+    public ResponseEntity<Customer> removeCustomer(@PathVariable("id") String id) {
 
         try {
             if (id != null) {
@@ -85,7 +91,7 @@ public class CustomerController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") UUID id, @RequestBody Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") String id, @RequestBody Customer customer) {
         try {
             if (id != null && customer != null) {
                 customerService.update(id, customer);

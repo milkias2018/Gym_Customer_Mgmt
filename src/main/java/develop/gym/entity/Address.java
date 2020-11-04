@@ -15,7 +15,7 @@ public class Address implements Serializable {
     @Column(name = "ID")
     private String id;
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    //@MapsId
     private Customer customer;
     @Column(name = "STREET_NAME")
     private String streetName;
@@ -32,8 +32,7 @@ public class Address implements Serializable {
     @Column(name = "COUNTRY")
     private String country;
 
-    public Address(String id, Customer customer, String streetName, int streetNumber, int roomNumber, String zipCode, String municipality, String city, String country) {
-        this.id = id;
+    public Address(Customer customer, String streetName, int streetNumber, int roomNumber, String zipCode, String municipality, String city, String country) {
         this.customer = customer;
         this.streetName = streetName;
         this.streetNumber = streetNumber;

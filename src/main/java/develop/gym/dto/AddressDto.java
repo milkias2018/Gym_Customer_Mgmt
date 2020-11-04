@@ -3,11 +3,12 @@ package develop.gym.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import develop.gym.entity.Address;
+import develop.gym.entity.Customer;
+import develop.gym.exception.CustomerNotFoundException;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AddressDto {
-    @JsonProperty("id")
-    private String id;
+
     @JsonProperty("streetName")
     private String streetName;
     @JsonProperty("streetNumber")
@@ -23,8 +24,7 @@ public class AddressDto {
     @JsonProperty("country")
     private String country;
 
-    public AddressDto(String id, String streetName, int streetNumber, int roomNumber, String zipCode, String municipality, String city, String country) {
-        this.id = id;
+    public AddressDto(String streetName, int streetNumber, int roomNumber, String zipCode, String municipality, String city, String country) throws CustomerNotFoundException {
         this.streetName = streetName;
         this.streetNumber = streetNumber;
         this.roomNumber = roomNumber;
@@ -37,20 +37,22 @@ public class AddressDto {
     public AddressDto() {
     }
 
-    public static Address convertToEntity(AddressDto addressDto) {
-        Address address1 = new Address(addressDto.getId().toString(), addressDto.getStreetName(), addressDto.getStreetNumber(),
-                addressDto.getRoomNumber(), addressDto.getZipCode(),
-                addressDto.getMunicipality(), addressDto.getCity(), addressDto.getCountry());
-        return address1;
+    public Address convertToEntity(Customer customer, AddressDto addressDto) throws CustomerNotFoundException {
+        if (customer != null && addressDto != null) {
+            Address address1 = new Address(customer,
+                    addressDto.getStreetName(),
+                    addressDto.getStreetNumber(),
+                    addressDto.getRoomNumber(),
+                    addressDto.getZipCode(),
+                    addressDto.getMunicipality(),
+                    addressDto.getCity(),
+                    addressDto.getCountry());
+
+            return address1;
+        } else
+            throw new NullPointerException();
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getStreetName() {
         return streetName;
