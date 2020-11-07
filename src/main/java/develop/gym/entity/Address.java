@@ -1,30 +1,41 @@
-package develop.dto;
+package develop.gym.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import develop.entity.Address;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class AddressDto {
-    @JsonProperty("id")
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "ADDRESSES")
+public class Address implements Serializable {
+
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "ADDRESS_ID")
     private String id;
-    @JsonProperty("streetName")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @MapsId
+    @JsonIgnore
+    private Customer customer;
+    @Column(name = "STREET_NAME")
     private String streetName;
-    @JsonProperty("streetNumber")
+    @Column(name = "STREET_NUMBER")
     private int streetNumber;
-    @JsonProperty("roomNumber")
+    @Column(name = "ROOM_NUMBER")
     private int roomNumber;
-    @JsonProperty("zipCode")
+    @Column(name = "ZIP_CODE")
     private String zipCode;
-    @JsonProperty("municipality")
+    @Column(name = "MUNICIPALITY")
     private String municipality;
-    @JsonProperty("city")
+    @Column(name = "CITY")
     private String city;
-    @JsonProperty("country")
+    @Column(name = "COUNTRY")
     private String country;
 
-    public AddressDto(String id, String streetName, int streetNumber, int roomNumber, String zipCode, String municipality, String city, String country) {
-        this.id = id;
+    public Address(Customer customer, String streetName, int streetNumber, int roomNumber, String zipCode, String municipality, String city, String country) {
+        this.customer = customer;
         this.streetName = streetName;
         this.streetNumber = streetNumber;
         this.roomNumber = roomNumber;
@@ -34,14 +45,15 @@ public class AddressDto {
         this.country = country;
     }
 
-    public AddressDto() {
+    public Address() {
     }
 
-    public static Address convertToEntity(AddressDto addressDto) {
-        Address address1 = new Address(addressDto.getId().toString(), addressDto.getStreetName(), addressDto.getStreetNumber(),
-                addressDto.getRoomNumber(), addressDto.getZipCode(),
-                addressDto.getMunicipality(), addressDto.getCity(), addressDto.getCountry());
-        return address1;
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getId() {

@@ -1,8 +1,8 @@
 
-package develop.dao;
+package develop.gym.dao;
 
-import develop.entity.Customer;
-import develop.exception.CustomerNotFoundException;
+import develop.gym.entity.Customer;
+import develop.gym.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -10,7 +10,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class CustomerDaoImpl implements CustomerDao {
@@ -24,7 +23,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer getCustomer(UUID customerId) throws CustomerNotFoundException {
+    public Customer getCustomer(String customerId) throws CustomerNotFoundException {
         Customer customer = entityManager.find(Customer.class, customerId);
         if (customer != null)
             return customer;
@@ -40,7 +39,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public void removeCustomer(UUID customerId) throws CustomerNotFoundException {
+    public void removeCustomer(String customerId) throws CustomerNotFoundException {
         Customer customer = entityManager.find(Customer.class, customerId);
         if (customer != null)
             entityManager.remove(customer);
@@ -50,7 +49,7 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public void update(UUID id, Customer customer) throws CustomerNotFoundException {
+    public void update(String id, Customer customer) throws CustomerNotFoundException {
         Customer customerToUpdate = entityManager.find(Customer.class, id);
         if (customerToUpdate != null) {
             customerToUpdate.setPersonNumber(customer.getPersonNumber());

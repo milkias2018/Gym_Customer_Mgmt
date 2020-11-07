@@ -1,14 +1,13 @@
-package develop.service;
+package develop.gym.service;
 
-import develop.dao.CustomerDao;
-import develop.entity.Customer;
-import develop.exception.CustomerNotFoundException;
+import develop.gym.dao.CustomerDao;
+import develop.gym.entity.Customer;
+import develop.gym.exception.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.UUID;
 
 @Component("customerService")
 @Transactional
@@ -30,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer getCustomerById(UUID customerId) throws CustomerNotFoundException {
+    public Customer getCustomerById(String customerId) throws CustomerNotFoundException {
         if (customerId != null) {
             return customerDao.getCustomer(customerId);
         } else
@@ -46,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void removeCustomer(UUID customerId) throws CustomerNotFoundException {
+    public void removeCustomer(String customerId) throws CustomerNotFoundException {
         if (customerId != null)
             customerDao.removeCustomer(customerId);
         else
@@ -54,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void update(UUID id, Customer customer) throws CustomerNotFoundException {
+    public void update(String id, Customer customer) throws CustomerNotFoundException {
         if (id != null && customer != null) {
             customerDao.update(id, customer);
         } else

@@ -1,4 +1,4 @@
-package develop.entity;
+package develop.gym.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -6,13 +6,16 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "MEMBERSHIP")
-public class Membership implements Serializable {
+@Table(name = "SUBSCRIPTIONS")
+public class Subscription implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID")
     private String id;
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private Customer customer;
     @Column(name = "MEMBERSHIP_TYPE")
     private String membershipType;
     @Column(name = "MEMBERSHIP_PERIOD")
@@ -24,8 +27,9 @@ public class Membership implements Serializable {
     @Column(name = "MEMBERSHIP_STATUS")
     private String membershipStatus;
 
-    public Membership(String id, String membershipType, String membershipPeriod, double costPerMonth, boolean groupTrainingIncluded, String membershipStatus) {
+    public Subscription(String id, Customer customer, String membershipType, String membershipPeriod, double costPerMonth, boolean groupTrainingIncluded, String membershipStatus) {
         this.id = id;
+        this.customer = customer;
         this.membershipType = membershipType;
         this.membershipPeriod = membershipPeriod;
         this.costPerMonth = costPerMonth;
@@ -33,7 +37,15 @@ public class Membership implements Serializable {
         this.membershipStatus = membershipStatus;
     }
 
-    public Membership() {
+    public Subscription() {
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getId() {

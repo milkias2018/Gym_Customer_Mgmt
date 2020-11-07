@@ -1,9 +1,10 @@
-package develop.controller;
+package develop.gym.controller;
 
-import develop.dto.CustomerDto;
-import develop.entity.Customer;
-import develop.exception.CustomerNotFoundException;
-import develop.service.CustomerService;
+import com.google.gson.Gson;
+import develop.gym.dto.CustomerDto;
+import develop.gym.entity.Customer;
+import develop.gym.exception.CustomerNotFoundException;
+import develop.gym.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,26 +14,33 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.NoResultException;
 import javax.ws.rs.QueryParam;
 import java.util.List;
-import java.util.UUID;
 
 
 @RestController
 @RequestMapping("api/customers")
-public class CustomerResource {
+public class CustomerController {
 
     @Autowired
     CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<Customer> saveCustomer(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity<String> saveCustomer(@RequestBody CustomerDto customerDto) {
 
         try {
             if (customerDto != null) {
-                CustomerDto customerDto1 = new CustomerDto(customerDto.getId(), customerDto.getPersonNumber(), customerDto.getFirstName(), customerDto.getMiddleName(), customerDto.getLastName(),
-                        customerDto.getPhoneNumber(), customerDto.getAddressDto(), customerDto.getMembershipDto(), customerDto.getNumberOfBookingAllowedPerWeek(), customerDto.getMemberSince());
+                CustomerDto customerDto1 = new CustomerDto(customerDto.getPersonNumber(),
+                        customerDto.getFirstName(),
+                        customerDto.getMiddleName(),
+                        customerDto.getLastName(),
+                        customerDto.getPhoneNumber(),
+                        customerDto.getAddressDto(),
+                        customerDto.getMembershipDto(),
+                        customerDto.getNumberOfBookingAllowedPerWeek(),
+                        customerDto.getMemberSince());
                 Customer customer = CustomerDto.convertToEntity(customerDto1);
                 customerService.saveCustomer(customer);
-                return ResponseEntity.status(HttpStatus.CREATED).build();
+                Gson gson = new Gson();
+                return ResponseEntity.ok().body(gson.toJson("Customer ID: " + customer.getId()));
             }
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -41,7 +49,7 @@ public class CustomerResource {
     }
 
     @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomerById(@PathVariable UUID customerId) throws CustomerNotFoundException {
+    public ResponseEntity<Customer> getCustomerById(@PathVariable String customerId) throws CustomerNotFoundException {
         try {
             if (customerId != null) {
                 Customer customer = customerService.getCustomerById(customerId);
@@ -69,7 +77,7 @@ public class CustomerResource {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Customer> removeCustomer(@PathVariable("id") UUID id) {
+    public ResponseEntity<Customer> removeCustomer(@PathVariable("id") String id) {
 
         try {
             if (id != null) {
@@ -85,7 +93,7 @@ public class CustomerResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") UUID id, @RequestBody Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") String id, @RequestBody Customer customer) {
         try {
             if (id != null && customer != null) {
                 customerService.update(id, customer);
@@ -105,7 +113,6 @@ public class CustomerResource {
 
         try {
             return ResponseEntity.ok(customerService.getCustomers());
-
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

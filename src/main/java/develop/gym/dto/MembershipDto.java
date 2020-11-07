@@ -1,8 +1,7 @@
-package develop.dto;
+package develop.gym.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import develop.entity.Membership;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MembershipDto {
@@ -30,15 +29,19 @@ public class MembershipDto {
 
     public MembershipDto() {
     }
-
-    public static Membership convertToEntity(MembershipDto membershipDto) {
+/*
+    public static Subscription convertToEntity(MembershipDto membershipDto) {
         if (membershipDto != null) {
-            Membership membership = new Membership(membershipDto.getId(), membershipDto.getMembershipType(), membershipDto.getMembershipPeriod(), membershipDto.getCostPerMonth(),
-                    membershipDto.isGroupTrainingIncluded(), membershipDto.getMembershipStatus());
-            return membership;
+            Subscription subscription = new Subscription(membershipDto.getId(),
+                    membershipDto.getMembershipType(),
+                    membershipDto.getMembershipPeriod(),
+                    membershipDto.getCostPerMonth(),
+                    membershipDto.isGroupTrainingIncluded(),
+                    membershipDto.getMembershipStatus());
+            return subscription;
         }
         return null;
-    }
+    }*/
 
     public String getId() {
         return id;

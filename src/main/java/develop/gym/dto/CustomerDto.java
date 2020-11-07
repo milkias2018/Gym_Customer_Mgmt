@@ -1,8 +1,8 @@
-package develop.dto;
+package develop.gym.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import develop.entity.Customer;
+import develop.gym.entity.Customer;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomerDto {
@@ -28,8 +28,7 @@ public class CustomerDto {
     @JsonProperty("memberSince")
     private String memberSince;
 
-    public CustomerDto(String id, String personNumber, String firstName, String middleName, String lastName, String phoneNumber, AddressDto addressDto, MembershipDto membershipDto, int numberOfBookingAllowedPerWeek, String memberSince) {
-        this.id = id;
+    public CustomerDto(String personNumber, String firstName, String middleName, String lastName, String phoneNumber, AddressDto addressDto, MembershipDto membershipDto, int numberOfBookingAllowedPerWeek, String memberSince) {
         this.personNumber = personNumber;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -46,9 +45,12 @@ public class CustomerDto {
 
     public static Customer convertToEntity(CustomerDto customerDto) {
         if (customerDto != null) {
-            Customer customerEntity = new Customer(customerDto.getId(), customerDto.getPersonNumber(), customerDto.getFirstName(), customerDto.getMiddleName(),
-                    customerDto.getLastName(), customerDto.getPhoneNumber(), AddressDto.convertToEntity(customerDto.addressDto),
-                    MembershipDto.convertToEntity(customerDto.getMembershipDto()), customerDto.getNumberOfBookingAllowedPerWeek(),
+            Customer customerEntity = new Customer(customerDto.getPersonNumber(),
+                    customerDto.getFirstName(),
+                    customerDto.getMiddleName(),
+                    customerDto.getLastName(),
+                    customerDto.getPhoneNumber(),
+                    customerDto.getNumberOfBookingAllowedPerWeek(),
                     customerDto.getMemberSince());
             return customerEntity;
         }
