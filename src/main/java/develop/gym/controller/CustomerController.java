@@ -113,7 +113,6 @@ public class CustomerController {
 
         try {
             return ResponseEntity.ok(customerService.getCustomers());
-
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

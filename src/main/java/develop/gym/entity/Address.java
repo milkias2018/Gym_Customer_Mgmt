@@ -1,5 +1,6 @@
 package develop.gym.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,8 +15,9 @@ public class Address implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ADDRESS_ID")
     private String id;
-    @OneToOne(fetch = FetchType.LAZY)
-    //@MapsId
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @MapsId
+    @JsonIgnore
     private Customer customer;
     @Column(name = "STREET_NAME")
     private String streetName;

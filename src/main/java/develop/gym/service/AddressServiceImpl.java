@@ -48,7 +48,18 @@ public class AddressServiceImpl implements AddressService {
             address.setZipCode(addressDto.getZipCode());
 
             return addressJpaDao.save(address);
+        }
+        return null;
+    }
 
+    @Override
+    public Address getAddressForCustomer(String customerId) throws CustomerNotFoundException {
+        if (customerId != null && !customerId.isEmpty()) {
+            Customer customer = customerDao.getCustomer(customerId);
+            if (customer.getAddress() != null)
+                return addressJpaDao.getOne(customer.getAddress().getId());
+            else
+                throw new NullPointerException();
         }
         return null;
     }

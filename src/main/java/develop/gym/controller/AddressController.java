@@ -53,4 +53,17 @@ public class AddressController {
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+
+    @GetMapping(value = "/{customerId}/address", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Address> getAddressOfCustomer(@PathVariable String customerId) {
+        try {
+            Address address = addressService.getAddressForCustomer(customerId);
+            return ResponseEntity.ok(address);
+        } catch (CustomerNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
 }
