@@ -16,23 +16,38 @@ import org.springframework.web.bind.annotation.*;
 public class AddressController {
 
     private AddressService addressService;
+    Gson gson = new Gson();
 
     @Autowired
     public AddressController(AddressService addressService) {
         this.addressService = addressService;
     }
 
-    @PostMapping(value = "/{customerId}/address",
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    @PostMapping(value = "/{customerId}/address", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createAddress(@PathVariable String customerId, @RequestBody AddressDto addressDto) {
         try {
             if (addressDto != null && customerId != null) {
                 Address address = addressService.saveAddress(customerId, addressDto);
-                Gson gson = new Gson();
-                return ResponseEntity.ok().body(gson.toJson(address.getId()));
+                return ResponseEntity.ok().body(gson.toJson("Address ID: " + address.getId()));
             }
         } catch (NullPointerException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.badRequest().body(gson.toJson(e.getMessage()));
+        } catch (CustomerNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @PutMapping(value = "/{customerId}/address", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> updateAddress(@PathVariable String customerId, @RequestBody AddressDto addressDto) {
+        try {
+            if (addressDto != null && customerId != null) {
+                Address address = addressService.updateAddress(customerId, addressDto);
+                return ResponseEntity.ok().body(gson.toJson("Address ID: " + address.getId()));
+            }
+        } catch (NullPointerException e) {
+            return ResponseEntity.badRequest().body(gson.toJson(e.getMessage()));
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

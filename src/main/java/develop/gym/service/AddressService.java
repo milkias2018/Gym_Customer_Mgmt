@@ -8,4 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AddressService {
     Address saveAddress(String customerId, AddressDto addressDto) throws CustomerNotFoundException;
+
+    Address updateAddress(String customerId, AddressDto addressDto) throws CustomerNotFoundException;
 }

@@ -1,5 +1,6 @@
 package develop.gym.controller;
 
+import com.google.gson.Gson;
 import develop.gym.dto.CustomerDto;
 import develop.gym.entity.Customer;
 import develop.gym.exception.CustomerNotFoundException;
@@ -23,7 +24,7 @@ public class CustomerController {
     CustomerService customerService;
 
     @PostMapping
-    public ResponseEntity<Customer> saveCustomer(@RequestBody CustomerDto customerDto) {
+    public ResponseEntity<String> saveCustomer(@RequestBody CustomerDto customerDto) {
 
         try {
             if (customerDto != null) {
@@ -38,7 +39,8 @@ public class CustomerController {
                         customerDto.getMemberSince());
                 Customer customer = CustomerDto.convertToEntity(customerDto1);
                 customerService.saveCustomer(customer);
-                return ResponseEntity.status(HttpStatus.CREATED).build();
+                Gson gson = new Gson();
+                return ResponseEntity.ok().body(gson.toJson("Customer ID: " + customer.getId()));
             }
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

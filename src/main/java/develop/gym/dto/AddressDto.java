@@ -37,6 +37,16 @@ public class AddressDto {
     public AddressDto() {
     }
 
+    public void toAddressDto(Address address) {
+        this.streetName = address.getStreetName();
+        this.streetNumber = address.getStreetNumber();
+        this.roomNumber = address.getRoomNumber();
+        this.zipCode = address.getZipCode();
+        this.municipality = address.getMunicipality();
+        this.city = address.getCity();
+        this.country = address.getCountry();
+    }
+
     public Address convertToEntity(Customer customer, AddressDto addressDto) throws CustomerNotFoundException {
         if (customer != null && addressDto != null) {
             Address address1 = new Address(customer,

@@ -26,9 +26,30 @@ public class AddressServiceImpl implements AddressService {
     public Address saveAddress(String customerId, AddressDto addressDto) throws CustomerNotFoundException {
         if (customerId != null && addressDto != null) {
             Customer customer = customerDao.getCustomer(customerId);
-            return addressJpaDao.save(addressDto.convertToEntity(customer, addressDto));
-        } else
-            throw new NullPointerException();
+            if (customer.getAddress() == null) {
+                return addressJpaDao.save(addressDto.convertToEntity(customer, addressDto));
+            }
+        }
+        return null;
     }
 
+    @Override
+    public Address updateAddress(String customerId, AddressDto addressDto) throws CustomerNotFoundException {
+        if (customerId != null && addressDto != null) {
+            Customer customer = customerDao.getCustomer(customerId);
+            Address address = addressJpaDao.getOne(customer.getAddress().getId());
+
+            address.setCity(addressDto.getCity());
+            address.setCountry(addressDto.getCountry());
+            address.setMunicipality(addressDto.getMunicipality());
+            address.setRoomNumber(addressDto.getRoomNumber());
+            address.setStreetName(addressDto.getStreetName());
+            address.setStreetNumber(addressDto.getStreetNumber());
+            address.setZipCode(addressDto.getZipCode());
+
+            return addressJpaDao.save(address);
+
+        }
+        return null;
+    }
 }
