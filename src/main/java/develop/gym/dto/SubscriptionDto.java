@@ -1,37 +1,25 @@
-package develop.gym.entity;
+package develop.gym.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
-@Entity
-@Table(name = "SUBSCRIPTIONS")
-public class Subscription implements Serializable {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "ID")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class SubscriptionDto {
+    @JsonProperty("id")
     private String id;
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JsonIgnore
-    private Customer customer;
-    @Column(name = "SUBSCRIPTION_TYPE")
+    @JsonProperty("subscriptionType")
     private String subscriptionType;
-    @Column(name = "SUBSCRIPTION_PERIOD")
+    @JsonProperty("subscriptionPeriod")
     private String subscriptionPeriod;
-    @Column(name = "COST_PER_MONTH")
+    @JsonProperty("costPerMonth")
     private double costPerMonth;
-    @Column(name = "GROUP_TRAINING")
+    @JsonProperty("groupTrainingIncluded")
     private boolean groupTrainingIncluded;
-    @Column(name = "SUBSCRIPTION_STATUS")
+    @JsonProperty("subscriptionStatus")
     private String subscriptionStatus;
 
-    public Subscription(String id, Customer customer, String subscriptionType, String subscriptionPeriod, double costPerMonth, boolean groupTrainingIncluded, String subscriptionStatus) {
+    public SubscriptionDto(String id, String subscriptionType, String subscriptionPeriod, double costPerMonth, boolean groupTrainingIncluded, String subscriptionStatus) {
         this.id = id;
-        this.customer = customer;
         this.subscriptionType = subscriptionType;
         this.subscriptionPeriod = subscriptionPeriod;
         this.costPerMonth = costPerMonth;
@@ -39,16 +27,21 @@ public class Subscription implements Serializable {
         this.subscriptionStatus = subscriptionStatus;
     }
 
-    public Subscription() {
+    public SubscriptionDto() {
     }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+/*
+    public static Subscription convertToEntity(SubscriptionDto subscriptionDto) {
+        if (subscriptionDto != null) {
+            Subscription subscription = new Subscription(subscriptionDto.getId(),
+                    subscriptionDto.getSubscriptionType(),
+                    subscriptionDto.getSubscriptionPeriod(),
+                    subscriptionDto.getCostPerMonth(),
+                    subscriptionDto.isGroupTrainingIncluded(),
+                    subscriptionDto.getSubscriptionStatus());
+            return subscription;
+        }
+        return null;
+    }*/
 
     public String getId() {
         return id;
