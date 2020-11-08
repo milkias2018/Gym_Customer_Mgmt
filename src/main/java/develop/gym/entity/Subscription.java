@@ -29,8 +29,7 @@ public class Subscription implements Serializable {
     @Column(name = "SUBSCRIPTION_STATUS")
     private String subscriptionStatus;
 
-    public Subscription(String id, Customer customer, String subscriptionType, String subscriptionPeriod, double costPerMonth, boolean groupTrainingIncluded, String subscriptionStatus) {
-        this.id = id;
+    public Subscription(Customer customer, String subscriptionType, String subscriptionPeriod, double costPerMonth, boolean groupTrainingIncluded, String subscriptionStatus) {
         this.customer = customer;
         this.subscriptionType = subscriptionType;
         this.subscriptionPeriod = subscriptionPeriod;

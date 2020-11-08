@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 @Table(name = "GROUP_TRAININGS")
@@ -13,7 +12,7 @@ public class GroupTraining implements Serializable {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID")
-    private UUID id;
+    private String id;
     @Column(name = "NAME")
     private String name;
     @Column(name = "DESCRIPTION")
@@ -25,8 +24,7 @@ public class GroupTraining implements Serializable {
     @Column(name = "NUMBER_OF_PARTICIPANTS")
     private int numberOfParticipants;
 
-    public GroupTraining(UUID id, String name, String description, String trainer, String roomName, int numberOfParticipants) {
-        this.id = id;
+    public GroupTraining(String name, String description, String trainer, String roomName, int numberOfParticipants) {
         this.name = name;
         this.description = description;
         this.trainer = trainer;
@@ -37,11 +35,11 @@ public class GroupTraining implements Serializable {
     public GroupTraining() {
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

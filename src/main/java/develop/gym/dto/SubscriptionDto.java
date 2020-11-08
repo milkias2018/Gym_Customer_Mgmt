@@ -2,11 +2,12 @@ package develop.gym.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import develop.gym.entity.Customer;
+import develop.gym.entity.Subscription;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SubscriptionDto {
-    @JsonProperty("id")
-    private String id;
+
     @JsonProperty("subscriptionType")
     private String subscriptionType;
     @JsonProperty("subscriptionPeriod")
@@ -18,8 +19,7 @@ public class SubscriptionDto {
     @JsonProperty("subscriptionStatus")
     private String subscriptionStatus;
 
-    public SubscriptionDto(String id, String subscriptionType, String subscriptionPeriod, double costPerMonth, boolean groupTrainingIncluded, String subscriptionStatus) {
-        this.id = id;
+    public SubscriptionDto(String subscriptionType, String subscriptionPeriod, double costPerMonth, boolean groupTrainingIncluded, String subscriptionStatus) {
         this.subscriptionType = subscriptionType;
         this.subscriptionPeriod = subscriptionPeriod;
         this.costPerMonth = costPerMonth;
@@ -29,26 +29,17 @@ public class SubscriptionDto {
 
     public SubscriptionDto() {
     }
-/*
-    public static Subscription convertToEntity(SubscriptionDto subscriptionDto) {
+
+    public static Subscription convertToEntity(Customer customer, SubscriptionDto subscriptionDto) {
         if (subscriptionDto != null) {
-            Subscription subscription = new Subscription(subscriptionDto.getId(),
+            return new Subscription(customer,
                     subscriptionDto.getSubscriptionType(),
                     subscriptionDto.getSubscriptionPeriod(),
                     subscriptionDto.getCostPerMonth(),
                     subscriptionDto.isGroupTrainingIncluded(),
                     subscriptionDto.getSubscriptionStatus());
-            return subscription;
         }
         return null;
-    }*/
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getSubscriptionType() {
