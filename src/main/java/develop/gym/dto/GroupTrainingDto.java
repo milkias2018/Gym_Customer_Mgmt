@@ -2,11 +2,13 @@ package develop.gym.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import develop.gym.entity.GroupTraining;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GroupTrainingDto {
-    @JsonProperty("personNumber")
-    private String personNumber;
+
+    @JsonProperty("title")
+    private String title;
     @JsonProperty("description")
     private String description;
     @JsonProperty("trainer")
@@ -16,8 +18,8 @@ public class GroupTrainingDto {
     @JsonProperty("numberOfParticipants")
     private int numberOfParticipants;
 
-    public GroupTrainingDto(String personNumber, String description, String trainer, String roomName, int numberOfParticipants) {
-        this.personNumber = personNumber;
+    public GroupTrainingDto(String title, String description, String trainer, String roomName, int numberOfParticipants) {
+        this.title = title;
         this.description = description;
         this.trainer = trainer;
         this.roomName = roomName;
@@ -27,12 +29,27 @@ public class GroupTrainingDto {
     public GroupTrainingDto() {
     }
 
-    public String getPersonNumber() {
-        return personNumber;
+    public static GroupTraining convertToEntity(GroupTrainingDto groupTrainingDto) {
+
+        if (groupTrainingDto != null) {
+            GroupTraining groupTraining = new GroupTraining();
+            groupTraining.setTitle(groupTrainingDto.getTitle());
+            groupTraining.setDescription(groupTrainingDto.getDescription());
+            groupTraining.setNumberOfParticipants(groupTrainingDto.getNumberOfParticipants());
+            groupTraining.setRoomName(groupTrainingDto.getRoomName());
+            groupTraining.setTrainer(groupTrainingDto.getTrainer());
+
+            return groupTraining;
+        }
+        return null;
     }
 
-    public void setPersonNumber(String personNumber) {
-        this.personNumber = personNumber;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {

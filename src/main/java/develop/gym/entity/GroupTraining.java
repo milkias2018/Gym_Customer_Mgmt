@@ -13,8 +13,8 @@ public class GroupTraining implements Serializable {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "ID")
     private String id;
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "TITLE")
+    private String title;
     @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "TRAINER")
@@ -24,8 +24,8 @@ public class GroupTraining implements Serializable {
     @Column(name = "NUMBER_OF_PARTICIPANTS")
     private int numberOfParticipants;
 
-    public GroupTraining(String name, String description, String trainer, String roomName, int numberOfParticipants) {
-        this.name = name;
+    public GroupTraining(String title, String description, String trainer, String roomName, int numberOfParticipants) {
+        this.title = title;
         this.description = description;
         this.trainer = trainer;
         this.roomName = roomName;
@@ -43,12 +43,12 @@ public class GroupTraining implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
