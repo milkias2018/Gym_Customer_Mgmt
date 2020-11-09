@@ -24,7 +24,10 @@ public class AddressController {
     }
 
 
-    @PostMapping(value = "/{customerId}/address", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{customerId}/address",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+
     public ResponseEntity<String> createAddress(@PathVariable String customerId, @RequestBody AddressDto addressDto) {
         try {
             if (addressDto != null && customerId != null) {
@@ -39,7 +42,9 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @PutMapping(value = "/{customerId}/address", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{customerId}/address",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateAddress(@PathVariable String customerId, @RequestBody AddressDto addressDto) {
         try {
             if (addressDto != null && customerId != null) {

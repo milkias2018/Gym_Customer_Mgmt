@@ -1,36 +1,25 @@
-package develop.gym.entity;
+package develop.gym.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import develop.gym.entity.Customer;
+import develop.gym.entity.Subscription;
 
-import javax.persistence.*;
-import java.io.Serializable;
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class SubscriptionDto {
 
-@Entity
-@Table(name = "SUBSCRIPTIONS")
-public class Subscription implements Serializable {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "ID")
-    private String id;
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JsonIgnore
-    private Customer customer;
-    @Column(name = "SUBSCRIPTION_TYPE")
+    @JsonProperty("subscriptionType")
     private String subscriptionType;
-    @Column(name = "SUBSCRIPTION_PERIOD")
+    @JsonProperty("subscriptionPeriod")
     private String subscriptionPeriod;
-    @Column(name = "COST_PER_MONTH")
+    @JsonProperty("costPerMonth")
     private double costPerMonth;
-    @Column(name = "GROUP_TRAINING")
+    @JsonProperty("groupTrainingIncluded")
     private boolean groupTrainingIncluded;
-    @Column(name = "SUBSCRIPTION_STATUS")
+    @JsonProperty("subscriptionStatus")
     private String subscriptionStatus;
 
-    public Subscription(Customer customer, String subscriptionType, String subscriptionPeriod, double costPerMonth, boolean groupTrainingIncluded, String subscriptionStatus) {
-        this.customer = customer;
+    public SubscriptionDto(String subscriptionType, String subscriptionPeriod, double costPerMonth, boolean groupTrainingIncluded, String subscriptionStatus) {
         this.subscriptionType = subscriptionType;
         this.subscriptionPeriod = subscriptionPeriod;
         this.costPerMonth = costPerMonth;
@@ -38,23 +27,19 @@ public class Subscription implements Serializable {
         this.subscriptionStatus = subscriptionStatus;
     }
 
-    public Subscription() {
+    public SubscriptionDto() {
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public static Subscription convertToEntity(Customer customer, SubscriptionDto subscriptionDto) {
+        if (subscriptionDto != null) {
+            return new Subscription(customer,
+                    subscriptionDto.getSubscriptionType(),
+                    subscriptionDto.getSubscriptionPeriod(),
+                    subscriptionDto.getCostPerMonth(),
+                    subscriptionDto.isGroupTrainingIncluded(),
+                    subscriptionDto.getSubscriptionStatus());
+        }
+        return null;
     }
 
     public String getSubscriptionType() {

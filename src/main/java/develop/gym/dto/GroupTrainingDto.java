@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GroupTrainingDto {
-
-    @JsonProperty("id")
-    private String id;
     @JsonProperty("personNumber")
     private String personNumber;
     @JsonProperty("description")
@@ -19,8 +16,7 @@ public class GroupTrainingDto {
     @JsonProperty("numberOfParticipants")
     private int numberOfParticipants;
 
-    public GroupTrainingDto(String id, String personNumber, String description, String trainer, String roomName, int numberOfParticipants) {
-        this.id = id;
+    public GroupTrainingDto(String personNumber, String description, String trainer, String roomName, int numberOfParticipants) {
         this.personNumber = personNumber;
         this.description = description;
         this.trainer = trainer;
@@ -29,14 +25,6 @@ public class GroupTrainingDto {
     }
 
     public GroupTrainingDto() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getPersonNumber() {

@@ -21,21 +21,21 @@ public class CustomerDto {
     private String phoneNumber;
     @JsonProperty("address")
     private AddressDto addressDto;
-    @JsonProperty("membership")
-    private MembershipDto membershipDto;
+    @JsonProperty("subscription")
+    private SubscriptionDto subscriptionDto;
     @JsonProperty("numberOfBookingAllowedPerWeek")
     private int numberOfBookingAllowedPerWeek;
     @JsonProperty("memberSince")
     private String memberSince;
 
-    public CustomerDto(String personNumber, String firstName, String middleName, String lastName, String phoneNumber, AddressDto addressDto, MembershipDto membershipDto, int numberOfBookingAllowedPerWeek, String memberSince) {
+    public CustomerDto(String personNumber, String firstName, String middleName, String lastName, String phoneNumber, AddressDto addressDto, SubscriptionDto subscriptionDto, int numberOfBookingAllowedPerWeek, String memberSince) {
         this.personNumber = personNumber;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.addressDto = addressDto;
-        this.membershipDto = membershipDto;
+        this.subscriptionDto = subscriptionDto;
         this.numberOfBookingAllowedPerWeek = numberOfBookingAllowedPerWeek;
         this.memberSince = memberSince;
     }
@@ -114,12 +114,12 @@ public class CustomerDto {
         this.addressDto = addressDto;
     }
 
-    public MembershipDto getMembershipDto() {
-        return membershipDto;
+    public SubscriptionDto getMembershipDto() {
+        return subscriptionDto;
     }
 
-    public void setMembershipDto(MembershipDto membershipDto) {
-        this.membershipDto = membershipDto;
+    public void setMembershipDto(SubscriptionDto subscriptionDto) {
+        this.subscriptionDto = subscriptionDto;
     }
 
     public int getNumberOfBookingAllowedPerWeek() {

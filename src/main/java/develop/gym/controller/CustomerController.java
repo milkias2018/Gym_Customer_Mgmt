@@ -23,7 +23,7 @@ public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveCustomer(@RequestBody CustomerDto customerDto) {
 
         try {
