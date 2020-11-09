@@ -15,7 +15,7 @@ public class Subscription implements Serializable {
     @Column(name = "ID")
     private String id;
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    //@MapsId
     @JsonIgnore
     private Customer customer;
     @Column(name = "SUBSCRIPTION_TYPE")

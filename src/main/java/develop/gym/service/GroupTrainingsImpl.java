@@ -28,7 +28,10 @@ public class GroupTrainingsImpl implements GroupTrainingService {
 
     @Override
     public void removeGroupTraining(String id) {
-
+        if (id != null)
+            groupTrainingJpaDao.deleteById(id);
+        else
+            throw new NullPointerException();
     }
 
     @Override

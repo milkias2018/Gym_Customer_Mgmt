@@ -33,8 +33,6 @@ public class CustomerController {
                         customerDto.getMiddleName(),
                         customerDto.getLastName(),
                         customerDto.getPhoneNumber(),
-                        customerDto.getAddressDto(),
-                        customerDto.getMembershipDto(),
                         customerDto.getNumberOfBookingAllowedPerWeek(),
                         customerDto.getMemberSince());
                 Customer customer = CustomerDto.convertToEntity(customerDto1);

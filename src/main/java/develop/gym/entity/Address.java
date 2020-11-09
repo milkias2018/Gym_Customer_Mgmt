@@ -16,7 +16,7 @@ public class Address implements Serializable {
     @Column(name = "ADDRESS_ID")
     private String id;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @MapsId
+   // @MapsId
     @JsonIgnore
     private Customer customer;
     @Column(name = "STREET_NAME")

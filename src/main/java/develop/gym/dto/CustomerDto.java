@@ -7,8 +7,6 @@ import develop.gym.entity.Customer;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomerDto {
 
-    @JsonProperty("id")
-    private String id;
     @JsonProperty("personNumber")
     private String personNumber;
     @JsonProperty("firstName")
@@ -19,23 +17,17 @@ public class CustomerDto {
     private String lastName;
     @JsonProperty("phonenumber")
     private String phoneNumber;
-    @JsonProperty("address")
-    private AddressDto addressDto;
-    @JsonProperty("subscription")
-    private SubscriptionDto subscriptionDto;
     @JsonProperty("numberOfBookingAllowedPerWeek")
     private int numberOfBookingAllowedPerWeek;
     @JsonProperty("memberSince")
     private String memberSince;
 
-    public CustomerDto(String personNumber, String firstName, String middleName, String lastName, String phoneNumber, AddressDto addressDto, SubscriptionDto subscriptionDto, int numberOfBookingAllowedPerWeek, String memberSince) {
+    public CustomerDto(String personNumber, String firstName, String middleName, String lastName, String phoneNumber, int numberOfBookingAllowedPerWeek, String memberSince) {
         this.personNumber = personNumber;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.addressDto = addressDto;
-        this.subscriptionDto = subscriptionDto;
         this.numberOfBookingAllowedPerWeek = numberOfBookingAllowedPerWeek;
         this.memberSince = memberSince;
     }
@@ -56,14 +48,6 @@ public class CustomerDto {
         }
         return null;
 
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getPersonNumber() {
@@ -104,22 +88,6 @@ public class CustomerDto {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public AddressDto getAddressDto() {
-        return addressDto;
-    }
-
-    public void setAddressDto(AddressDto addressDto) {
-        this.addressDto = addressDto;
-    }
-
-    public SubscriptionDto getMembershipDto() {
-        return subscriptionDto;
-    }
-
-    public void setMembershipDto(SubscriptionDto subscriptionDto) {
-        this.subscriptionDto = subscriptionDto;
     }
 
     public int getNumberOfBookingAllowedPerWeek() {
