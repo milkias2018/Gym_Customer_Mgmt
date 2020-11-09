@@ -1,5 +1,6 @@
 package develop.gym.entity;
 
+import develop.gym.dto.GroupTrainingDto;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -33,6 +34,18 @@ public class GroupTraining implements Serializable {
     }
 
     public GroupTraining() {
+    }
+
+    public static GroupTraining convertToEntity(GroupTrainingDto groupTrainingDto) {
+        GroupTraining groupTraining = new GroupTraining();
+
+        groupTraining.setTitle(groupTrainingDto.getTitle());
+        groupTraining.setDescription(groupTrainingDto.getDescription());
+        groupTraining.setTrainer(groupTrainingDto.getTrainer());
+        groupTraining.setNumberOfParticipants(groupTrainingDto.getNumberOfParticipants());
+        groupTraining.setRoomName(groupTrainingDto.getRoomName());
+
+        return groupTraining;
     }
 
     public String getId() {

@@ -45,4 +45,20 @@ public class GroupTrainingController {
         return ResponseEntity.status(500).build();
     }
 
+    @PutMapping(value = "/{groupTrainingId}",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<String> updateGroupTraining(@PathVariable String groupTrainingId, @RequestBody GroupTrainingDto groupTrainingDto) {
+        try {
+            if (groupTrainingId != null && groupTrainingDto != null) {
+                GroupTraining groupTraining = groupTrainingService.updateGroupTraining(groupTrainingId, groupTrainingDto);
+                return ResponseEntity.ok(groupTraining.getId());
+            }
+        } catch (NullPointerException e) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.status(500).build();
+    }
+
 }

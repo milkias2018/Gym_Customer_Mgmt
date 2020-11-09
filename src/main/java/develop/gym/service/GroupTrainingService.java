@@ -12,7 +12,7 @@ public interface GroupTrainingService {
 
     void removeGroupTraining(String id);
 
-    void updateGroupTraining(String groupTrainingId, GroupTrainingDto groupTrainingDto);
+    GroupTraining updateGroupTraining(String groupTrainingId, GroupTrainingDto groupTrainingDto);
 
     List<GroupTraining> getGroupTrainings();
 }

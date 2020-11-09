@@ -35,8 +35,19 @@ public class GroupTrainingsImpl implements GroupTrainingService {
     }
 
     @Override
-    public void updateGroupTraining(String groupTrainingId, GroupTrainingDto groupTrainingDto) {
+    public GroupTraining updateGroupTraining(String groupTrainingId, GroupTrainingDto groupTrainingDto) {
+        if (groupTrainingId != null && groupTrainingDto != null) {
+            GroupTraining groupTraining = groupTrainingJpaDao.getOne(groupTrainingId);
 
+            groupTraining.setTitle(groupTrainingDto.getTitle());
+            groupTraining.setDescription(groupTrainingDto.getDescription());
+            groupTraining.setTrainer(groupTrainingDto.getTrainer());
+            groupTraining.setNumberOfParticipants(groupTrainingDto.getNumberOfParticipants());
+            groupTraining.setRoomName(groupTrainingDto.getRoomName());
+
+            return groupTrainingJpaDao.save(groupTraining);
+        }
+        return null;
     }
 
     @Override

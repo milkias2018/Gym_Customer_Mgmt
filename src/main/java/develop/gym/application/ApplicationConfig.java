@@ -18,14 +18,14 @@ public class ApplicationConfig {
                 select().
                 apis(RequestHandlerSelectors.basePackage("develop.gym.controller")).
                 paths(PathSelectors.any()).
-                build();
+                build().apiInfo(apiInfo());
     }
 
     @Bean
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Gym Swagger API ")
-                .description("Gym customer management system")
+                .title("Gym Customer Managemet API")
+                .description("Gym customer management system to register users,update memberships,make group trainings and more.")
                 .version("1.0")
                 .build();
     }
