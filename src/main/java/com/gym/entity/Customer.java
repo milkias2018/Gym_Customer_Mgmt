@@ -25,7 +25,7 @@ public class Customer implements Serializable {
     private String phoneNumber;
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Address address;
-    @OneToOne(mappedBy = "customer", cascade = CascadeType.PERSIST, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Subscription subscription;
     @Column(name = "NUMBER_OF_BOOKINGS_PER_WEEK")
     private int numberOfBookingAllowedPerWeek;
