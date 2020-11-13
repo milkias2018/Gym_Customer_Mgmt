@@ -6,7 +6,6 @@ import com.gym.exception.CustomerNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
@@ -32,10 +31,13 @@ public class CustomerDaoImpl implements CustomerDao {
     }
 
     @Override
-    public Customer getCustomerByPersonNummer(String personNummer) throws CustomerNotFoundException, NoResultException {
+    public Customer getCustomerByPersonNummer(String personNummer) throws CustomerNotFoundException {
         Query customerQuery = entityManager.createQuery("select c from Customer c where c.personNumber LIKE :personNummer").
                 setParameter("personNummer", personNummer);
-        return (Customer) customerQuery.getSingleResult();
+        if (customerQuery != null)
+            return (Customer) customerQuery.getSingleResult();
+        else
+            throw new CustomerNotFoundException("Customer not found");
     }
 
     @Override
