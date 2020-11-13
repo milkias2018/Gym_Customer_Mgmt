@@ -4,6 +4,7 @@ import com.gym.dao.CustomerDao;
 import com.gym.entity.Customer;
 import com.gym.exception.CustomerNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -38,10 +39,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getCustomerByPersonNummer(String personNummer) throws CustomerNotFoundException {
-        if (personNummer != null || !personNummer.isEmpty()) {
-            return customerDao.getCustomerByPersonNummer(personNummer);
-        } else
-            throw new CustomerNotFoundException("customer not found");
+        try {
+            if (personNummer != null) {
+                return customerDao.getCustomerByPersonNummer(personNummer);
+            }
+        } catch (CustomerNotFoundException | EmptyResultDataAccessException e) {
+            throw new CustomerNotFoundException("Customer not found exception");
+        }
+        return null;
     }
 
     @Override
@@ -65,10 +70,6 @@ public class CustomerServiceImpl implements CustomerService {
         List<Customer> customers = customerDao.getCustomers();
 
         if (customers != null) {
-            /*customers.stream()
-                    .filter(s -> s.getId() > 1)
-                    .map(s -> s.getFirstName().toUpperCase())
-                    .sorted(Comparator.naturalOrder());*/
             return customers;
         } else
             throw new CustomerNotFoundException("customer not found");
