@@ -54,7 +54,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address getAddressForCustomer(String customerId) throws CustomerNotFoundException {
-        if (customerId != null && !customerId.isEmpty()) {
+        if (customerId != null) {
             Customer customer = customerDao.getCustomer(customerId);
             if (customer.getAddress() != null)
                 return addressJpaDao.getOne(customer.getAddress().getId());
