@@ -5,6 +5,8 @@ import com.gym.dto.CustomerDto;
 import com.gym.entity.Customer;
 import com.gym.exception.CustomerNotFoundException;
 import com.gym.service.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,18 +14,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.NoResultException;
-import javax.ws.rs.QueryParam;
 import java.util.List;
 
 
 @RestController
-@RequestMapping("api/customers")
-public class CustomerController {
+@RequestMapping("/api")
+public class CustomerResource {
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomerResource.class);
 
     @Autowired
     CustomerService customerService;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/customers")
     public ResponseEntity<String> saveCustomer(@RequestBody CustomerDto customerDto) {
 
         try {
@@ -38,15 +41,17 @@ public class CustomerController {
                 Customer customer = CustomerDto.convertToEntity(customerDto1);
                 customerService.saveCustomer(customer);
                 Gson gson = new Gson();
+                logger.info("Created Customer" + " with ID: " + customer.getId());
                 return ResponseEntity.ok().body(gson.toJson("Customer ID: " + customer.getId()));
             }
         } catch (NullPointerException e) {
+            logger.info(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/customers/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Customer> getCustomerById(@PathVariable String customerId) throws CustomerNotFoundException {
         try {
             if (customerId != null) {
@@ -54,27 +59,30 @@ public class CustomerController {
                 return ResponseEntity.ok(customer);
             }
         } catch (CustomerNotFoundException e) {
+            logger.info(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomerByPersonNummer(@QueryParam("personNummer") String personNummer) {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/customers/{personNummer}")
+    public ResponseEntity<Customer> getCustomerByPersonNummer(@PathVariable String personNummer) {
         try {
             if (personNummer != null) {
                 Customer customer = customerService.getCustomerByPersonNummer(personNummer);
                 return ResponseEntity.ok().body(customer);
             }
         } catch (CustomerNotFoundException e) {
+            logger.info(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (NoResultException e) {
+            logger.info(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/customers/{id}")
     public ResponseEntity<Customer> removeCustomer(@PathVariable("id") String id) {
 
         try {
@@ -90,7 +98,7 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/customers/{id}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable("id") String id, @RequestBody Customer customer) {
         try {
             if (id != null && customer != null) {
@@ -106,7 +114,7 @@ public class CustomerController {
 
     }
 
-    @GetMapping(value = "/records", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/customers/records", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Customer>> getCustomers() throws CustomerNotFoundException {
 
         try {

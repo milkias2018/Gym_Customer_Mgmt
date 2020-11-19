@@ -32,27 +32,31 @@ public class SubsciptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public Subscription updateSubscription(String customerId, SubscriptionDto subscriptionDto) throws CustomerNotFoundException {
+    public Subscription updateSubscription(String customerId, String subscriptionId, SubscriptionDto subscriptionDto) throws CustomerNotFoundException {
 
-        if (customerId != null && subscriptionDto != null) {
+        if (customerId != null && subscriptionId != null && subscriptionDto != null) {
             Customer customer = customerDao.getCustomer(customerId);
-            Subscription subscription = subscriptionJpaDao.getOne(customer.getMembership().getId());
+            Subscription subscription = subscriptionJpaDao.getOne(subscriptionId);
 
-            subscription.setCostPerMonth(subscriptionDto.getCostPerMonth());
-            subscription.setGroupTrainingIncluded(subscriptionDto.isGroupTrainingIncluded());
-            subscription.setSubscriptionPeriod(subscriptionDto.getSubscriptionPeriod());
-            subscription.setSubscriptionStatus(subscriptionDto.getSubscriptionStatus());
-            subscription.setSubscriptionType(subscriptionDto.getSubscriptionType());
+            if (customer.getMembership().getId().equals(subscription.getId())) {
+                subscription.setCostPerMonth(subscriptionDto.getCostPerMonth());
+                subscription.setGroupTrainingIncluded(subscriptionDto.isGroupTrainingIncluded());
+                subscription.setSubscriptionPeriod(subscriptionDto.getSubscriptionPeriod());
+                subscription.setSubscriptionStatus(subscriptionDto.getSubscriptionStatus());
+                subscription.setSubscriptionType(subscriptionDto.getSubscriptionType());
 
-            return subscriptionJpaDao.save(subscription);
+                return subscriptionJpaDao.save(subscription);
+            }
         }
         return null;
     }
 
     @Override
-    public Subscription getSubscription(String customerId) throws CustomerNotFoundException {
+    public Subscription getSubscription(String customerId, String subscriptionId) throws CustomerNotFoundException {
         Customer customer = customerDao.getCustomer(customerId);
-        if (customer != null)
+        Subscription subscription = subscriptionJpaDao.getOne(subscriptionId);
+
+        if (customer.getMembership().getId().equals(subscription.getId()))
             return subscriptionJpaDao.getOne(customer.getMembership().getId());
         else
             throw new NullPointerException();

@@ -157,8 +157,8 @@ public class CustomerServiceImplTest {
         customerList.add(customer1);
 
         List<Customer> getCustomerList = customerService.getCustomers();
-        assertEquals(2, getCustomerList.size());
-        assertEquals("Test 02", getCustomerList.get(0).getMiddleName());
+        assertEquals(3, getCustomerList.size()); //additional customer added from commandline runner.
+        assertEquals("Test 02", getCustomerList.get(1).getMiddleName());
     }
 
 }
