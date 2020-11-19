@@ -13,13 +13,12 @@ import org.springframework.stereotype.Component;
 public class AddressServiceImpl implements AddressService {
 
     private AddressJpaDao addressJpaDao;
-
-    @Autowired
     private CustomerDao customerDao;
 
     @Autowired
-    public AddressServiceImpl(AddressJpaDao addressJpaDao) {
+    public AddressServiceImpl(AddressJpaDao addressJpaDao, CustomerDao customerDao) {
         this.addressJpaDao = addressJpaDao;
+        this.customerDao = customerDao;
     }
 
     @Override
@@ -34,29 +33,33 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address updateAddress(String customerId, AddressDto addressDto) throws CustomerNotFoundException {
-        if (customerId != null && addressDto != null) {
+    public Address updateAddress(String customerId, String addressId, AddressDto addressDto) throws CustomerNotFoundException {
+        if (customerId != null && addressId != null && addressDto != null) {
             Customer customer = customerDao.getCustomer(customerId);
-            Address address = addressJpaDao.getOne(customer.getAddress().getId());
+            Address address = addressJpaDao.getOne(addressId);
 
-            address.setCity(addressDto.getCity());
-            address.setCountry(addressDto.getCountry());
-            address.setMunicipality(addressDto.getMunicipality());
-            address.setRoomNumber(addressDto.getRoomNumber());
-            address.setStreetName(addressDto.getStreetName());
-            address.setStreetNumber(addressDto.getStreetNumber());
-            address.setZipCode(addressDto.getZipCode());
+            if (customer.getAddress().getId().equals(address.getId())) {
+                address.setCity(addressDto.getCity());
+                address.setCountry(addressDto.getCountry());
+                address.setMunicipality(addressDto.getMunicipality());
+                address.setRoomNumber(addressDto.getRoomNumber());
+                address.setStreetName(addressDto.getStreetName());
+                address.setStreetNumber(addressDto.getStreetNumber());
+                address.setZipCode(addressDto.getZipCode());
 
-            return addressJpaDao.save(address);
+                return addressJpaDao.save(address);
+            }
         }
         return null;
     }
 
     @Override
-    public Address getAddressForCustomer(String customerId) throws CustomerNotFoundException {
-        if (customerId != null) {
+    public Address getAddressForCustomer(String customerId, String addressId) throws CustomerNotFoundException {
+        if (customerId != null && addressId != null) {
             Customer customer = customerDao.getCustomer(customerId);
-            if (customer.getAddress() != null)
+            Address address = addressJpaDao.getOne(addressId);
+
+            if (customer.getAddress().getId().equals(address.getId()))
                 return addressJpaDao.getOne(customer.getAddress().getId());
             else
                 throw new NullPointerException();

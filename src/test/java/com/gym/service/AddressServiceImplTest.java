@@ -28,6 +28,7 @@ public class AddressServiceImplTest {
     @Test
     @Transactional
     public void saveAddress() throws CustomerNotFoundException {
+
         Customer customer = new Customer();
         customer.setFirstName("Test 01");
         customer.setLastName("Test 02");
@@ -38,11 +39,9 @@ public class AddressServiceImplTest {
         addressDto.setStreetName("Exempelgatan");
         addressDto.setStreetNumber(3);
         addressDto.setCity("Stockholm");
-        addressDto.setCountry("Sverige");
-        addressDto.setRoomNumber(5);
-        addressDto.setMunicipality("Skondal");
 
-        addressService.saveAddress(customer.getId(), addressDto);
+        Address address = addressService.saveAddress(customer.getId(), addressDto);
+        assertEquals("Exempelgatan", address.getStreetName());
     }
 
     @Test
@@ -65,7 +64,7 @@ public class AddressServiceImplTest {
         addressDto.setStreetName("Exempelgatan");
         addressDto.setStreetNumber(3);
 
-        addressService.updateAddress(customer.getId(), addressDto);
+        addressService.updateAddress(customer.getId(), address.getId(), addressDto);
 
         assertEquals("Exempelgatan", customer.getAddress().getStreetName());
         assertEquals(3, customer.getAddress().getStreetNumber());
@@ -86,7 +85,7 @@ public class AddressServiceImplTest {
         customer.setAddress(address);
         customerService.saveCustomer(customer);
 
-        Address address1 = addressService.getAddressForCustomer(customer.getId());
+        Address address1 = addressService.getAddressForCustomer(customer.getId(), address.getId());
         assertEquals(address.getStreetName(), address1.getStreetName());
     }
 }
