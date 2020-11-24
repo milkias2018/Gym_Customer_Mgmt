@@ -12,14 +12,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.filter.AbstractRequestLoggingFilter;
 
 import javax.persistence.NoResultException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
 @RestController
 @RequestMapping("/api")
-public class CustomerResource {
+public class CustomerResource extends BaseResource {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerResource.class);
 
@@ -123,4 +125,5 @@ public class CustomerResource {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
 }

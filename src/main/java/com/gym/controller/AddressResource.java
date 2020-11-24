@@ -12,10 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.filter.AbstractRequestLoggingFilter;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/api")
-public class AddressResource {
+public class AddressResource extends BaseResource {
     private static final Logger logger = LoggerFactory.getLogger(AddressResource.class);
     private AddressService addressService;
     Gson gson = new Gson();

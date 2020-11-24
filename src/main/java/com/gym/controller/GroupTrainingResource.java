@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.filter.AbstractRequestLoggingFilter;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/api")
-public class GroupTrainingResource {
+public class GroupTrainingResource extends BaseResource {
 
     private static final Logger logger = LoggerFactory.getLogger(GroupTrainingResource.class);
     private GroupTrainingService groupTrainingService;
