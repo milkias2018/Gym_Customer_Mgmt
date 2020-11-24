@@ -65,7 +65,7 @@ public class CustomerResource {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/customers/{personNummer}")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/customers/pnr/{personNummer}")
     public ResponseEntity<Customer> getCustomerByPersonNummer(@PathVariable String personNummer) {
         try {
             if (personNummer != null) {
