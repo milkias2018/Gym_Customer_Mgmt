@@ -149,6 +149,6 @@ public class CustomerDaoImplTest {
         customers.add(customer);
         customers.add(customer1);
         List<Customer> customerList = customerDao.getCustomers();
-        assertEquals(2, customerList.size());
+        assertEquals(3, customerList.size());//additional customer from command line runner
     }
 }
