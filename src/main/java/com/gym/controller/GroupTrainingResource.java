@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/api")
-public class GroupTrainingResource extends BaseResource {
+public class GroupTrainingResource {
 
     private static final Logger logger = LoggerFactory.getLogger(GroupTrainingResource.class);
     private GroupTrainingService groupTrainingService;

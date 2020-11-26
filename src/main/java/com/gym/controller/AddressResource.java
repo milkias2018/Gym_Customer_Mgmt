@@ -18,7 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/api")
-public class AddressResource extends BaseResource {
+public class AddressResource {
+
     private static final Logger logger = LoggerFactory.getLogger(AddressResource.class);
     private AddressService addressService;
     Gson gson = new Gson();

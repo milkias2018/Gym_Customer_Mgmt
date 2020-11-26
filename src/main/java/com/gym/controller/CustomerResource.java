@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class CustomerResource extends BaseResource {
+public class CustomerResource {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerResource.class);
 
